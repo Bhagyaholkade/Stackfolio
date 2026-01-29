@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt, { SignOptions } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User.js';
 
 export interface AuthRequest extends Request {
@@ -89,11 +89,10 @@ export const optionalAuth = async (
 
 export const generateToken = (userId: string): string => {
   const jwtSecret = process.env.JWT_SECRET || 'default-secret-change-me';
-  const jwtExpire = process.env.JWT_EXPIRE || '7d';
+  // Use number of seconds for expiration (7 days = 604800 seconds)
+  const jwtExpireSeconds = parseInt(process.env.JWT_EXPIRE_SECONDS || '604800', 10);
 
-  const options: SignOptions = {
-    expiresIn: jwtExpire,
-  };
-
-  return jwt.sign({ id: userId }, jwtSecret, options);
+  return jwt.sign({ id: userId }, jwtSecret, {
+    expiresIn: jwtExpireSeconds,
+  });
 };
