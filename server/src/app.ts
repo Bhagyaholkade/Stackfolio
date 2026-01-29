@@ -1,7 +1,6 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
 import connectDB from './config/db.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
@@ -16,8 +15,9 @@ connectDB();
 const app: Express = express();
 
 // Middleware
+const clientUrl = (process.env.CLIENT_URL || 'http://localhost:3000').replace(/\/$/, '');
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: clientUrl,
   credentials: true,
 }));
 app.use(express.json());
