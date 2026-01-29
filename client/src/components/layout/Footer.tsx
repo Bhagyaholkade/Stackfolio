@@ -9,6 +9,9 @@ export function Footer() {
           <GitBranch className="h-4 w-4" />
           <span>&copy; {new Date().getFullYear()} Stackfolio. All rights reserved.</span>
         </div>
+        <p className="text-sm text-muted-foreground">
+          Crafted by <span className="text-primary font-medium">Bhagya</span>
+        </p>
         <nav className="flex gap-4 text-sm text-muted-foreground">
           <Link to="/about" className="hover:text-foreground transition-colors">
             About
